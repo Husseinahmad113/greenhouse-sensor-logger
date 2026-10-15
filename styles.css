@@ -57,3 +57,47 @@ button {
 button:hover {
     background-color: #1b5e20;
 }
+
+#error-message {
+    color: #b71c1c;
+    background-color: #ffebee;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#error-message[hidden] {
+    display: none;
+}
+
+.log-list {
+    margin-top: 15px;
+}
+
+.log-card {
+    background-color: #f4f7f4;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 15px;
+    }
+
+    main {
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .sensor-entry,
+    .log-history {
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
