@@ -25,3 +25,15 @@ function loadRecords() {
         sensorRecords = JSON.parse(savedRecords);
     }
 }
+function displayRecords() {
+    logList.innerHTML = "";
+    sensorRecords.forEach(function(record) {
+        const card = document.createElement("div");
+        card.className = "log-card";
+        card.textContent = "Greenhouse Bay: " + record.bay;
+        card.textContent += " | pH: " + record.ph;
+        card.textContent += " | EC: " + record.ec + " mS/cm";
+        logList.appendChild(card);
+    });
+    updateRecordCount();
+}
