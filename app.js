@@ -23,7 +23,34 @@ function loadRecords() {
 
     if (savedRecords) {
         sensorRecords = JSON.parse(savedRecords);
+        sensorRecords.forEach(function(record) {
+    if (!record.id) record.id = crypto.randomUUID();
+});
+saveRecords();
     }
+}
+function classifyReading(ph, temp, ec, humidity) {
+    const critical =
+        (ph < 5.0 || ph > 7.5) &&
+        (temp < 55 || temp > 95) &&
+        (ec < 0.2 || ec > 4.5) &&
+        (humidity < 30 || humidity > 90);
+
+    if (critical) {
+        return "Critical Hazard";
+    }
+
+    const optimal =
+        (ph >= 5.5 && ph <= 6.5) &&
+        (temp >= 64.4 && temp <= 71.6) &&
+        (ec >= 1.0 && ec <= 2.0) &&
+        (humidity >= 50 && humidity <= 70);
+
+    if (optimal) {
+        return "Optimal";
+    }
+
+    return "Warning";
 }
 function displayRecords() {
     logList.innerHTML = "";
@@ -35,6 +62,17 @@ function displayRecords() {
         card.textContent += " | EC: " + record.ec + " mS/cm";
         card.textContent += " | Temperature: " + record.temp + " °F";
         card.textContent += " | Humidity: " + record.humidity + "%";
+        card.textContent += " | Status: " + (record.status || classifyReading(record.ph, record.temp, record.ec, record.humidity));
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", function() {
+    sensorRecords = sensorRecords.filter(function(item) {
+        return item.id !== record.id;
+    });
+    saveRecords();
+    displayRecords();
+});
+        card.appendChild(deleteButton);
         logList.appendChild(card);
     });
     updateRecordCount();
@@ -72,11 +110,13 @@ if (!Number.isFinite(humidity) || humidity < 0 || humidity > 100) {
     return;
 }
 const newRecord = {
+    id: crypto.randomUUID(),
     bay: bay,
     ph: ph,
     ec: ec,
     temp: temp,
-    humidity: humidity
+    humidity: humidity,
+    status: classifyReading(ph, temp, ec, humidity)
 };
 sensorRecords.push(newRecord);
 saveRecords();
