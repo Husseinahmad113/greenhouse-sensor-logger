@@ -71,4 +71,23 @@ if (!Number.isFinite(humidity) || humidity < 0 || humidity > 100) {
     showError("Please enter a valid humidity between 0 and 100.");
     return;
 }
+const newRecord = {
+    bay: bay,
+    ph: ph,
+    ec: ec,
+    temp: temp,
+    humidity: humidity
+};
+sensorRecords.push(newRecord);
+saveRecords();
+displayRecords();
+sensorForm.reset();
+});
+
+loadRecords();
+displayRecords();
+purgeAllButton.addEventListener("click", function() {
+    sensorRecords = [];
+    saveRecords();
+    displayRecords();
 });
