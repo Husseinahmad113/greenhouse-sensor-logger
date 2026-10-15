@@ -33,7 +33,42 @@ function displayRecords() {
         card.textContent = "Greenhouse Bay: " + record.bay;
         card.textContent += " | pH: " + record.ph;
         card.textContent += " | EC: " + record.ec + " mS/cm";
+        card.textContent += " | Temperature: " + record.temp + " °F";
+        card.textContent += " | Humidity: " + record.humidity + "%";
         logList.appendChild(card);
     });
     updateRecordCount();
 }
+sensorForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const bay = document.getElementById("bay").value.trim();
+    const ph = Number(document.getElementById("ph").value);
+    const ec = Number(document.getElementById("ec").value);
+    const temp = Number(document.getElementById("temp").value);
+    const humidity = Number(document.getElementById("humidity").value);
+    clearError();
+    if (["ph", "ec", "temp", "humidity"].some(id => document.getElementById(id).value.trim() === "")) {
+    showError("Please fill in all sensor readings.");
+    return;
+}
+    if (bay === "") {
+    showError("Please enter a greenhouse bay.");
+    return;
+}
+if (!Number.isFinite(ph) || ph < 0 || ph > 14) {
+    showError("Please enter a valid pH level between 0 and 14.");
+    return;
+}
+if (!Number.isFinite(ec) || ec < 0) {
+    showError("Please enter a valid EC value of 0 or greater.");
+    return;
+}
+if (!Number.isFinite(temp)) {
+    showError("Please enter a valid temperature.");
+    return;
+}
+if (!Number.isFinite(humidity) || humidity < 0 || humidity > 100) {
+    showError("Please enter a valid humidity between 0 and 100.");
+    return;
+}
+});
