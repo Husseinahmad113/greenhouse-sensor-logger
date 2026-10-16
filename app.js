@@ -1,3 +1,4 @@
+(function() {
 const sensorForm = document.getElementById("sensor-form");
 const logList = document.getElementById("log-list");
 const recordCount = document.getElementById("record-count");
@@ -54,6 +55,7 @@ function classifyReading(ph, temp, ec, humidity) {
 }
 function displayRecords() {
     logList.innerHTML = "";
+    const fragment = document.createDocumentFragment();
     sensorRecords.forEach(function(record) {
         const card = document.createElement("div");
         card.className = "log-card";
@@ -81,8 +83,9 @@ function displayRecords() {
     displayRecords();
 });
         card.appendChild(deleteButton);
-        logList.appendChild(card);
+        fragment.appendChild(card);
     });
+    logList.appendChild(fragment);
     updateRecordCount();
 }
 sensorForm.addEventListener("submit", function(event) {
@@ -153,3 +156,4 @@ sensorInputs.forEach(function(id) {
 }
     });
 });
+})();
