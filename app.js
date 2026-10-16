@@ -5,6 +5,7 @@ const recordCount = document.getElementById("record-count");
 const purgeAllButton = document.getElementById("purge-all");
 const errorMessage = document.getElementById("error-message");
 let sensorRecords = [];
+const STORAGE_KEY = "greenhouseRecords";
 function updateRecordCount() {
     recordCount.textContent = sensorRecords.length;
 }
@@ -17,10 +18,10 @@ function clearError() {
     errorMessage.hidden = true;
 }
 function saveRecords() {
-    localStorage.setItem("greenhouseRecords", JSON.stringify(sensorRecords));
+   localStorage.setItem(STORAGE_KEY, JSON.stringify(sensorRecords));
 }
 function loadRecords() {
-    const savedRecords = localStorage.getItem("greenhouseRecords");
+    const savedRecords = localStorage.getItem(STORAGE_KEY);
 
     if (savedRecords) {
         sensorRecords = JSON.parse(savedRecords);
