@@ -57,6 +57,14 @@ function displayRecords() {
     sensorRecords.forEach(function(record) {
         const card = document.createElement("div");
         card.className = "log-card";
+        const status = record.status || classifyReading(record.ph, record.temp, record.ec, record.humidity);
+        if (status === "Optimal") {
+    card.classList.add("status-optimal");
+} else if (status === "Warning") {
+    card.classList.add("status-warning");
+} else if (status === "Critical Hazard") {
+    card.classList.add("status-critical");
+}
         card.textContent = "Greenhouse Bay: " + record.bay;
         card.textContent += " | pH: " + record.ph;
         card.textContent += " | EC: " + record.ec + " mS/cm";
