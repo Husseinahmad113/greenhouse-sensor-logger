@@ -139,3 +139,17 @@ purgeAllButton.addEventListener("click", function() {
     saveRecords();
     displayRecords();
 });
+
+const sensorInputs = ["ph", "ec", "temp", "humidity"];
+sensorInputs.forEach(function(id) {
+    const input = document.getElementById(id);
+    input.addEventListener("input", function() {
+        if (input.value.trim() === "") {
+    clearError();
+} else if (!input.checkValidity()) {
+    showError("Please enter a valid value for " + id + ".");
+} else {
+    clearError();
+}
+    });
+});
