@@ -116,3 +116,9 @@ button:hover {
     color: #721c24;
     border-left: 5px solid #dc3545;
 }
+
+input.invalid {
+    border: 2px solid #dc3545;
+    background-color: #fff0f0;
+    outline-color: #dc3545;
+}

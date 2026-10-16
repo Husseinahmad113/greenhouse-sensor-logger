@@ -150,10 +150,13 @@ sensorInputs.forEach(function(id) {
     input.addEventListener("input", function() {
         if (input.value.trim() === "") {
     clearError();
+    input.classList.remove("invalid");
 } else if (!input.checkValidity()) {
     showError("Please enter a valid value for " + id + ".");
+    input.classList.add("invalid");
 } else {
     clearError();
+    input.classList.remove("invalid");
 }
     });
 });
